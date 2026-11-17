@@ -624,7 +624,7 @@ pluck = Attack("Pluck", "Fly", "Physical", 65, 100, 0)
 peck = Attack("Peck", "Fly", "Physical", 35, 100,0)
 hurricane = Attack("Hurricane", "Fly", "Special", 110, 70, 0)
 acrobatics = Attack("Acrobatics", "Fly", "Physical", 55, 100, 0)
-aeroblast = Attack("Aeroblast", "Fly", "Special", "105", 90, 0)
+aeroblast = Attack("Aeroblast", "Fly", "Special", 105, 90, 0)
 airslash = Attack("Air Slash", "Fly", "Special", 80, 95, 0)
 chatter = Attack("Chatter","Fly", "Special", 80, 100, 0)
 aircutter = Attack("Air Cutter", "Fly","Special",65,95,0)
@@ -1004,8 +1004,8 @@ special_forms = [mega_blastoise,mega_charizard_y,mega_charizard_x, mega_venusaur
 
 your_pokedex = [] #Imagine you want to simulate only Swampert vs Pikachu, u dont need to simulate all battles, u Write the pokemons name and them they will be add in this list and a loop will put them fighting, or just the legendaries or special forms
 
-Estatistic_victories = []
 while True:
+    Estatistic_victories = []
     your_pokedex = []
     print("=======================")
     print("Super Pokemon Simulator")
@@ -1016,15 +1016,16 @@ while True:
     print("Select -4 to simulate all pokemons except legendaries and special forms")
     print("Select -5 to simulate just legendaries")
     print("Select -6 to simulate just special forms and legendaries")
-    print("Select -7 to simulate to select the pokemons type you want to simulate (If the pokemon has more than 1 type, it will be included in the simulation, the type just need to be one of the types of the pokemon)")
+    print("Select -7 to simulate only legendaries and special forms")
+    print("Select -8 to simulate to select the pokemons type you want to simulate (If the pokemon has more than 1 type, it will be included in the simulation, the type just need to be one of the types of the pokemon)")
     print("========================")
-    print("Select -8 to leave the simulator")
+    print("Select -9 to leave the simulator")
     print("========================")
     select = int(input(f"How many pokemons u want to select to simulate {len(pokedex)}): "))
-    if select<=-13:
+    if select<=-10:
         while True:
             select = int(input("Pls chose something valid: "))
-            if select>-13:
+            if select>-10:
                 break
     #All pokemon      
     if select == -1:
@@ -1043,7 +1044,7 @@ while True:
         for i in range(len(Estatistic_victories)):
             print(f"{pokedex[i].name}: {Estatistic_victories[i]} victories")
     #No special form
-    if select == -2:
+    elif select == -2:
 
         your_pokedex = pokedex[:]
         for pokemon in special_forms:
@@ -1063,7 +1064,7 @@ while True:
         for i in range(len(Estatistic_victories)):
             print(f"{your_pokedex[i].name}: {Estatistic_victories[i]} victories")
     #No legendarie
-    if select == -3:
+    elif select == -3:
         your_pokedex = pokedex[:]
         for pokemon in legendaries:
             if pokemon in your_pokedex:
@@ -1082,7 +1083,7 @@ while True:
         for i in range(len(Estatistic_victories)):
             print(f"{your_pokedex[i].name}: {Estatistic_victories[i]} victories")
     #No legendarie and special form
-    if select == -4:
+    elif select == -4:
         your_pokedex = pokedex[:]
         for pokemon in special_forms:
             if pokemon in your_pokedex:
@@ -1104,7 +1105,7 @@ while True:
         for i in range(len(Estatistic_victories)):
             print(f"{your_pokedex[i].name}: {Estatistic_victories[i]} victories")
     #Just Legendaries
-    if select == -5:
+    elif select == -5:
         your_pokedex = legendaries[:]
         for pokemon in your_pokedex:
             pokemon1=pokemon
@@ -1120,7 +1121,7 @@ while True:
         for i in range(len(Estatistic_victories)):
             print(f"{your_pokedex[i].name}: {Estatistic_victories[i]} victories")
     #Just Special Forms
-    if select == -6:
+    elif select == -6:
         your_pokedex = special_forms[:]
         for pokemon in your_pokedex:
             pokemon1=pokemon
@@ -1136,7 +1137,7 @@ while True:
         for i in range(len(Estatistic_victories)):
             print(f"{your_pokedex[i].name}: {Estatistic_victories[i]} victories")
     #Only legendaries and special forms
-    if select == -7:
+    elif select == -7:
         your_pokedex = special_forms[:] + legendaries[:]
         for pokemon in your_pokedex:
             pokemon1=pokemon
@@ -1152,12 +1153,34 @@ while True:
         for i in range(len(Estatistic_victories)):
             print(f"{your_pokedex[i].name}: {Estatistic_victories[i]} victories")
     #You select the type including all pokemons
+    elif select == -8:
+        types = list(pokemon_types.keys())
+
+        select_type = input("Select the type you want to simulate: ").strip().title()
+
+        while True:
+            if select_type not in types:
+                print("Having problems? Try typing exactly like:")
+                print(types)
+                select_type = input("Select something valid: ").strip().title()
+            else:
+                break
+
+        your_pokedex = []
+
+        for pokemon in pokedex:
+            if select_type in pokemon.types:
+                your_pokedex.append(pokemon)
+    elif select == -9:
+        print("Leaving Simulator...")
+        break
+
 
     
     else:
         for i in range(select):
             pokemon_selected = input("Select a pokemon to add in the battle (name like in the pokedex ex:bulbasaur): ")
-            for pokemon in your_pokedex:
+            for pokemon in pokedex:
                 if pokemon.name.lower() == pokemon_selected.lower():
                     your_pokedex.append(pokemon)
                     print(f"{pokemon} added to the battle")
